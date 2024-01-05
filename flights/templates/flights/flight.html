@@ -1,0 +1,35 @@
+{% extends 'flights/layout.html'%}
+
+{%block body %}
+<button><a href="http://127.0.0.1:8000/flights">Back to flight View</a></button>
+<h1> Flight {{flight.id}}</h1>
+
+
+<ul>
+    <li> Origin: {{flight.origin}}</li>
+    <li> Destination: {{flight.destination}}</li>
+    <li> Duration: {{flight.duration}} Min</li>
+
+
+</ul>
+<h2> Passenger:</h2>
+<ul>
+    {% for passenger in passengers %}
+    <li> {{passenger}}</li>
+    {%empty%}
+    <li>No passengers.</li>
+    {%endfor%}
+</ul>
+
+
+<h2> Add Passenger</h2>
+<form action="{% url 'book' flight.id %}" method="post">
+    {% csrf_token %}
+    <select name="passenger">
+        {% for passenger in non_passengers%}
+        <option value="{{ passenger.id }}">{{passenger}}</option>
+        {%endfor%}
+    </select>
+    <input type="submit">
+</form>
+{% endblock %}
